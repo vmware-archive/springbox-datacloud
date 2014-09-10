@@ -34,6 +34,20 @@
                                        amqp-template="amqpTemplate"
                                        exchange-name="kiosk.pickup.events"/>
 
+    <!-- Rent -->
+
+    <int:channel id="rentChannel"/>
+
+    <int:object-to-json-transformer content-type="text/plain"
+                                    input-channel="rentChannel"
+                                    output-channel="rentOutbound"/>
+
+    <int:channel id="rentOutbound"/>
+
+    <int-amqp:outbound-channel-adapter channel="rentOutbound"
+                                       amqp-template="amqpTemplate"
+                                       exchange-name="kiosk.rent.events"/>
+
 
     <!-- Reservations -->
 

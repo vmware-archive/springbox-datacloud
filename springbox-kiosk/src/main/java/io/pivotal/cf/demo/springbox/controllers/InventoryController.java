@@ -2,6 +2,7 @@ package io.pivotal.cf.demo.springbox.controllers;
 
 import io.pivotal.cf.demo.springbox.events.DropOffEvent;
 import io.pivotal.cf.demo.springbox.events.PickUpEvent;
+import io.pivotal.cf.demo.springbox.events.RentEvent;
 import io.pivotal.cf.demo.springbox.gateways.InventoryGateway;
 import io.pivotal.cf.demo.springbox.model.Genre;
 import io.pivotal.cf.demo.springbox.model.Movie;
@@ -48,7 +49,20 @@ public class InventoryController {
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/reservation/pickUp/{customerId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/inventory/rent/{movieId}", method = RequestMethod.PUT)
+    public ResponseEntity<String> rent(@PathVariable("movieId") Long movieId) {
+        Movie movie = movieRepository.findOne(movieId);
+        int numberInStock = movie.getNumberInStock();
+        numberInStock--;
+        movie.setNumberInStock(numberInStock);
+        movieRepository.save(movie);
+
+        inventoryGateway.sendRentEvent(new RentEvent(movie.getId(), extractGenreIds(movie), locationId));
+
+        return new ResponseEntity<>("{}", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/inventory/pickUp/{customerId}", method = RequestMethod.DELETE)
     public ResponseEntity<String> pickUp(@PathVariable("customerId") String customerId) {
         final List<Reservation> reservations = reservationRepository.findByCustomerId(customerId);
 
