@@ -13,7 +13,7 @@ public class Reservation {
     @Column(nullable = false)
     private String customerId;
 
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
 

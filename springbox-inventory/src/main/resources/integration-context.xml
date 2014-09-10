@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <int-amqp:inbound-channel-adapter channel="kioskEventChannel"
-                                      connection-factory="connectionFactory"
+                                      connection-factory="rabbitConnectionFactory"
                                       queue-names="inventory.kiosk.events"/>
 
     <int:channel id="kioskEventChannel"/>

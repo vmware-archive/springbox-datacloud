@@ -8,4 +8,69 @@ applications:
     SPRING_PROFILES_ACTIVE: cloud
   services:
   - catalog-mongo
+- name: springbox-inventory
+  memory: 512M
+  instances: 1
+  path: springbox-inventory/build/libs/springbox-inventory-0.0.1-SNAPSHOT.jar
+  env:
+    SPRING_PROFILES_ACTIVE: cloud
+  services:
+  - spring-xd-rabbit
+  - inventory-redis
+- name: springbox-kiosk-1
+  memory: 512M
+  instances: 1
+  path: springbox-kiosk/build/libs/springbox-kiosk-0.0.1-SNAPSHOT.jar
+  timeout: 90
+  env:
+    SPRING_PROFILES_ACTIVE: cloud
+    LOCATION_ID: 1
+  services:
+  - spring-xd-rabbit
+  - kiosk-1
+- name: springbox-kiosk-2
+  memory: 512M
+  instances: 1
+  path: springbox-kiosk/build/libs/springbox-kiosk-0.0.1-SNAPSHOT.jar
+  timeout: 90
+  env:
+    SPRING_PROFILES_ACTIVE: cloud
+    LOCATION_ID: 2
+  services:
+  - spring-xd-rabbit
+  - kiosk-2
+- name: springbox-kiosk-3
+  memory: 512M
+  instances: 1
+  path: springbox-kiosk/build/libs/springbox-kiosk-0.0.1-SNAPSHOT.jar
+  timeout: 90
+  env:
+    SPRING_PROFILES_ACTIVE: cloud
+    LOCATION_ID: 3
+  services:
+  - spring-xd-rabbit
+  - kiosk-3
+- name: springbox-kiosk-4
+  memory: 512M
+  instances: 1
+  path: springbox-kiosk/build/libs/springbox-kiosk-0.0.1-SNAPSHOT.jar
+  timeout: 90
+  env:
+    SPRING_PROFILES_ACTIVE: cloud
+    LOCATION_ID: 4
+  services:
+  - spring-xd-rabbit
+  - kiosk-4
+- name: springbox-kiosk-5
+  memory: 512M
+  instances: 1
+  path: springbox-kiosk/build/libs/springbox-kiosk-0.0.1-SNAPSHOT.jar
+  timeout: 90
+  env:
+    SPRING_PROFILES_ACTIVE: cloud
+    LOCATION_ID: 5
+  services:
+  - spring-xd-rabbit
+  - kiosk-5
+
 

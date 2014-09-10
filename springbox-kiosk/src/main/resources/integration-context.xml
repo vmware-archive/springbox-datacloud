@@ -56,7 +56,7 @@
     <int:channel id="reservationsHandler"/>
 
     <int-amqp:inbound-channel-adapter channel="reservationsChannel"
-                                      connection-factory="connectionFactory"
+                                      connection-factory="rabbitConnectionFactory"
                                       queue-names="reservation.events.#{systemEnvironment['LOCATION_ID']}"/>
 
     <int:json-to-object-transformer input-channel="reservationsChannel" output-channel="reservationsHandler"/>

@@ -35,6 +35,7 @@ subprojects {
         compile("org.springframework.boot:spring-boot-starter-actuator")
         testCompile("org.springframework.boot:spring-boot-starter-test")
         runtime("org.hsqldb:hsqldb")
+        runtime('postgresql:postgresql:9.1-901-1.jdbc4')
     }
 
 }
