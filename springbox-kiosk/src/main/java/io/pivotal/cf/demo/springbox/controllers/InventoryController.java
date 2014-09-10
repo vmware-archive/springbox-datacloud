@@ -3,6 +3,7 @@ package io.pivotal.cf.demo.springbox.controllers;
 import io.pivotal.cf.demo.springbox.events.DropOffEvent;
 import io.pivotal.cf.demo.springbox.events.PickUpEvent;
 import io.pivotal.cf.demo.springbox.gateways.InventoryGateway;
+import io.pivotal.cf.demo.springbox.model.Genre;
 import io.pivotal.cf.demo.springbox.model.Movie;
 import io.pivotal.cf.demo.springbox.model.Reservation;
 import io.pivotal.cf.demo.springbox.repositories.MovieRepository;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,7 +43,7 @@ public class InventoryController {
         movie.setNumberInStock(numberInStock);
         movieRepository.save(movie);
 
-        inventoryGateway.sendDropOffEvent(new DropOffEvent(movie.getId(), movie.getGenre().getId(), locationId));
+        inventoryGateway.sendDropOffEvent(new DropOffEvent(movie.getId(), extractGenreIds(movie), locationId));
 
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
@@ -52,10 +54,18 @@ public class InventoryController {
 
         for (Reservation reservation : reservations) {
             Movie movie = reservation.getMovie();
-            inventoryGateway.sendPickUpEvent(new PickUpEvent(movie.getId(), movie.getGenre().getId(), locationId));
+            inventoryGateway.sendPickUpEvent(new PickUpEvent(movie.getId(), extractGenreIds(movie), locationId));
             reservationRepository.delete(reservation);
         }
 
         return new ResponseEntity<>("{}", HttpStatus.OK);
+    }
+
+    private List<String> extractGenreIds(Movie movie) {
+        ArrayList<String> genreIds = new ArrayList<>();
+        for (Genre genre : movie.getGenres()) {
+            genreIds.add(genre.getMlId());
+        }
+        return genreIds;
     }
 }

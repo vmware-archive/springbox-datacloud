@@ -1,14 +1,16 @@
 package io.pivotal.cf.demo.springbox.events;
 
+import java.util.List;
+
 public class DropOffEvent {
 
     private Long movieId;
-    private Long genreId;
+    private List<String> genreIds;
     private Long locationId;
 
-    public DropOffEvent(Long movieId, Long genreId, Long locationId) {
+    public DropOffEvent(Long movieId, List<String> genreIds, Long locationId) {
         this.movieId = movieId;
-        this.genreId = genreId;
+        this.genreIds = genreIds;
         this.locationId = locationId;
     }
 
@@ -20,12 +22,12 @@ public class DropOffEvent {
         this.movieId = movieId;
     }
 
-    public Long getGenreId() {
-        return genreId;
+    public List<String> getGenreIds() {
+        return genreIds;
     }
 
-    public void setGenreId(Long genreId) {
-        this.genreId = genreId;
+    public void setGenreIds(List<String> genreId) {
+        this.genreIds = genreIds;
     }
 
     public Long getLocationId() {
@@ -40,7 +42,7 @@ public class DropOffEvent {
     public String toString() {
         return "DropOffEvent{" +
                 "movieId=" + movieId +
-                ", genreId=" + genreId +
+                ", genreIds=" + genreIds +
                 ", locationId=" + locationId +
                 '}';
     }

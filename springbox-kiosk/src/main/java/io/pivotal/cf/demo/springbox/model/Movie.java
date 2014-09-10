@@ -1,6 +1,7 @@
 package io.pivotal.cf.demo.springbox.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "movies")
@@ -13,9 +14,14 @@ public class Movie {
     @Column(nullable = false)
     private String title;
 
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "genre_id")
-    private Genre genre;
+    @Column(nullable = false)
+    private String mlId;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "movies_genres",
+                joinColumns = {@JoinColumn(name="movie_id", referencedColumnName = "id")},
+                inverseJoinColumns = {@JoinColumn(name="genre_id", referencedColumnName = "id")})
+    private List<Genre> genres;
 
     @Column(nullable = false)
     private int numberInStock;
@@ -36,12 +42,12 @@ public class Movie {
         this.title = title;
     }
 
-    public Genre getGenre() {
-        return genre;
+    public List<Genre> getGenres() {
+        return genres;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public void setGenre(List<Genre> genres) {
+        this.genres = genres;
     }
 
     public int getNumberInStock() {
