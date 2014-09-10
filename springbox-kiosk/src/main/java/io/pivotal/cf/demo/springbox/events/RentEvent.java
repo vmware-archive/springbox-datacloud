@@ -11,7 +11,7 @@ public class RentEvent {
     private List<String> genreIds;
     private Long locationId;
 
-    public RentEvent(Long id, List<String> strings, Long locationId) {
+    public RentEvent(Long movieId, List<String> genreIds, Long locationId) {
         this.movieId = movieId;
         this.genreIds = genreIds;
         this.locationId = locationId;
