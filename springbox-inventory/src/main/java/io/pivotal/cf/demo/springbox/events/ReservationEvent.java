@@ -18,15 +18,15 @@ public class ReservationEvent {
         return movieId;
     }
 
-    public void setMovieId(String movieId) {
-        this.movieId = movieId;
-    }
-
     public String getLocationId() {
         return locationId;
     }
 
     public void setLocationId(String locationId) {
         this.locationId = locationId;
+    }
+
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
     }
 }

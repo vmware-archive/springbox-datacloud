@@ -2,7 +2,7 @@ package io.pivotal.cf.demo.springbox.events;
 
 import java.util.List;
 
-public class DropOffEvent {
+public class RentEvent {
 
     private Long movieId;
     private List<String> genreIds;
@@ -20,7 +20,7 @@ public class DropOffEvent {
         return genreIds;
     }
 
-    public void setGenreIds(List<String> genreId) {
+    public void setGenreIds(List<String> genreIds) {
         this.genreIds = genreIds;
     }
 
@@ -30,14 +30,5 @@ public class DropOffEvent {
 
     public void setLocationId(Long locationId) {
         this.locationId = locationId;
-    }
-
-    @Override
-    public String toString() {
-        return "DropOffEvent{" +
-                "movieId=" + movieId +
-                ", genreIds=" + genreIds +
-                ", locationId=" + locationId +
-                '}';
     }
 }

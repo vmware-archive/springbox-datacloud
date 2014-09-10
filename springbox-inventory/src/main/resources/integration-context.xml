@@ -7,20 +7,29 @@
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <int:channel id="dropOffChannel"/>
-
-
-
-    <int:channel id="dropOffHandler"/>
-
-
-
-    <int-amqp:inbound-channel-adapter channel="dropOffChannel"
+    <int-amqp:inbound-channel-adapter channel="kioskEventChannel"
                                       connection-factory="connectionFactory"
                                       queue-names="inventory.kiosk.events"/>
 
-    <int:json-to-object-transformer input-channel="dropOffChannel" output-channel="dropOffHandler"/>
+    <int:channel id="kioskEventChannel"/>
 
+    <int:json-to-object-transformer input-channel="kioskEventChannel" output-channel="routingChannel"/>
+
+    <int:channel id="routingChannel"/>
+
+    <int:payload-type-router input-channel="routingChannel">
+        <int:mapping type="io.pivotal.cf.demo.springbox.events.DropOffEvent" channel="dropOffHandler" />
+        <int:mapping type="io.pivotal.cf.demo.springbox.events.ReservationEvent" channel="reservationHandler" />
+        <int:mapping type="io.pivotal.cf.demo.springbox.events.RentEvent" channel="rentHandler" />
+    </int:payload-type-router>
+
+    <int:channel id="dropOffHandler"/>
     <int:service-activator input-channel="dropOffHandler" ref="inventoryEventHandler" method="handleDropOffEvent"/>
+
+    <int:channel id="reservationHandler"/>
+    <int:service-activator input-channel="reservationHandler" ref="inventoryEventHandler" method="handleReservationEvent"/>
+
+    <int:channel id="rentHandler"/>
+    <int:service-activator input-channel="rentHandler" ref="inventoryEventHandler" method="handleRentEvent"/>
 
 </beans>
