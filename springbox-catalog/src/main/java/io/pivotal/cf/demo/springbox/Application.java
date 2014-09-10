@@ -19,14 +19,4 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-
-//    @Bean
-//    public MongoDbFactory mongo() {
-//        try {
-//            return new SimpleMongoDbFactory(new MongoClient("ds035280.mongolab.com", 35280), "CloudFoundry_4hurnk80_9f2haksv",
-//                    new UserCredentials("springbox", "password"));
-//        } catch (UnknownHostException e) {
-//            throw new RuntimeException("Error creating MongoDbFactory: " + e);
-//        }
-//    }
 }
