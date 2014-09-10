@@ -7,6 +7,8 @@
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- Drop Off -->
+
     <int:channel id="dropOffChannel"/>
 
     <int:object-to-json-transformer content-type="text/plain"
@@ -16,6 +18,35 @@
 
     <int-amqp:outbound-channel-adapter channel="dropOffOutbound"
                                        amqp-template="amqpTemplate"
-                                       exchange-name="kiosk.events"/>
+                                       exchange-name="kiosk.dropoff.events"/>
+
+    <!-- Pick Up -->
+
+    <int:channel id="pickUpChannel"/>
+
+    <int:object-to-json-transformer content-type="text/plain"
+                                    input-channel="pickUpChannel"
+                                    output-channel="pickUpOutbound"/>
+
+    <int:channel id="pickUpOutbound"/>
+
+    <int-amqp:outbound-channel-adapter channel="pickUpOutbound"
+                                       amqp-template="amqpTemplate"
+                                       exchange-name="kiosk.pickup.events"/>
+
+
+    <!-- Reservations -->
+
+    <int:channel id="reservationsChannel"/>
+
+    <int:channel id="reservationsHandler"/>
+
+    <int-amqp:inbound-channel-adapter channel="reservationsChannel"
+                                      connection-factory="connectionFactory"
+                                      queue-names="reservation.events.#{systemEnvironment['LOCATION_ID']}"/>
+
+    <int:json-to-object-transformer input-channel="reservationsChannel" output-channel="reservationsHandler"/>
+
+    <int:service-activator input-channel="reservationsHandler" ref="reservationEventHandler" method="handleReservationEvent"/>
 
 </beans>
