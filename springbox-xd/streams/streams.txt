@@ -1,0 +1,2 @@
+stream create --name rabbittest --definition "rabbit | hdfs --rollover=200" --deploy
+

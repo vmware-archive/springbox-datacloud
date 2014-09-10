@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-amqp="http://www.springframework.org/schema/integration/amqp"
+       xsi:schemaLocation="http://www.springframework.org/schema/integration/amqp http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <int:channel id="dropOffChannel"/>
+
+    <int:object-to-json-transformer content-type="text/plain"
+            input-channel="dropOffChannel" output-channel="dropOffOutbound"/>
+
+    <int:channel id="dropOffOutbound"/>
+
+    <int-amqp:outbound-channel-adapter channel="dropOffOutbound"
+                                       amqp-template="amqpTemplate"
+                                       exchange-name="kiosk.events"/>
+
+</beans>

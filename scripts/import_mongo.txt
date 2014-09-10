@@ -1,0 +1,9 @@
+Import ML Genre Data to Mongo
+
+~/tools/mongodb-osx-x86_64-2.6.1/bin/mongoimport -c genres --file ./u.genre --type csv --headerline
+
+Export Mongo ID to ML ID Mapping
+
+~/tools/mongodb-osx-x86_64-2.6.1/bin/mongoexport -c genre -o genres.mongo --csv -f _id,mlId
+
+

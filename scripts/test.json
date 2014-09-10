@@ -1,0 +1,1 @@
+{"mlId":1,"title":"Toy Story (1995)","genres":[{"$ref":"genre","$id":"ObjectID(540f97fe30f23849fe6e5f0b)"}],"class":"io.pivotal.cf.demo.springbox.models.Movie"}

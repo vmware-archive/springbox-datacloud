@@ -1,0 +1,1 @@
+include "springbox-kiosk", "springbox-inventory", "springbox-catalog", "springbox-depot"
