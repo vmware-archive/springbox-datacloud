@@ -1,0 +1,4 @@
+= SpringBox
+== A "reference architecture" for microservices and data...
+
+In the absence of better docs, please see link:AppsDataCloud.pdf[this deck] for context.
